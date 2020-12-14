@@ -1,35 +1,42 @@
 const express = require("express");
 const https = require("https");
 //no need to require the https mudule and also no need to install it using node.
-
 const app = express();
+var path = require('path')
+const favicon = require('serve-favicon');
+const bodyParser = require("body-parser");
 
-app.get("/", (req, res) => {
-  res.sendFile(__dirname + "index.html");
+app.use(bodyParser.urlencoded({extended:true}));
+
+app.use(favicon(path.join(__dirname, 'css', 'weatherapp.ico')));
+app.use(express.static(__dirname + '/css'));
+app.get('/', (req, res) => {
+  res.sendFile(__dirname + '/index.html');
 });
 
-app.post("/",(req,res)=> {
-const city = req.body.city;
-const apiKey = "ff65e7e7239c9952d61517362fdcde3c";
-const unit = "metric";
 
-const url = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + apiKey + "&units=" + unit;
+app.post('/', (req, res) => {
+  const city = req.body.cityname;
+  const apiKey = "ff65e7e7239c9952d61517362fdcde3c";
+  const unit = "metric";
 
-https.get(url, function (response) {
-  response.on("data", (d) => {
-    const js = JSON.parse(d);
+  const url = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + apiKey + "&units=" + unit;
 
-    res.write("<h1>Current Temp at " + js.name + ": " + js.main.temp +
-      " Degree Celsius</h1>");
+  https.get(url, function (response) {
+    response.on("data", (d) => {
+      const js = JSON.parse(d);
 
-    const imgad = "https://openweathermap.org/img/wn/" + js.weather[0].icon + "@2x.png";
+      res.write("<h1>Current Temp at " + js.name + ": " + js.main.temp +
+        " Degree Celsius</h1>");
+
+      const imgad = "https://openweathermap.org/img/wn/" + js.weather[0].icon + "@2x.png";
 
 
-    res.write("<img src=" + imgad + ">");
-    res.write("<p>Current Description: " + js.weather[0].description + "</p>")
-    res.send();
+      res.write("<img src=" + imgad + ">");
+      res.write("<p>Current Description: " + js.weather[0].description + "</p>")
+      res.send();
+    });
   });
-});
 
 });
 
