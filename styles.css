@@ -1,0 +1,52 @@
+body {
+    background-color: #30475e;
+}
+
+h1 {
+    color: #f05454;
+    font-family: 'Black Ops One', cursive;
+    text-align: center;
+    font-size: 4rem;
+}
+
+.city-name {
+    text-align: center;
+    margin: 170px;
+}
+
+
+input[type=text] {
+    text-align: left;
+    width: 500px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    background-color: white;
+    background-image: url('loupe.png');
+    background-position: 10px 10px;
+    background-size: 20px;
+    background-repeat: no-repeat;
+    padding: 12px 20px 12px 40px;
+    transition: width 0.4s ease-in-out;
+}
+
+input[type=text]:focus {
+    width: 90%;
+}
+
+input[type=submit] {
+    background-color: #fecd1a;
+    border: none;
+    color: black;
+    padding: 16px 32px;
+    text-decoration: none;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: 0.4s ease-in-out;
+}
+
+input[type=submit]:hover {
+    background-color: rgb(189, 230, 9);
+}
